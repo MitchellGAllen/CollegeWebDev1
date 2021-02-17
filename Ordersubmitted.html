@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Order Submitted</title>
+</head>
+
+<body>
+    <h1>Your form has been submitted!</h1>
+    <h2>You entered the following data:</h2>
+
+    <script type="text/javascript">
+        /* <![CDATA[ */
+        var formData = location.search;
+        formData = formData.substring(1, formData.length);
+        while (formData.indexOf("+") != -1) {
+            formData = formData.replace("+", " ");
+        }
+        formData = unescape(formData);
+        var formArray = formData.split("&");
+        document.write("<p>");
+        for (var i=0; i < formArray.length; ++i) {
+            document.writeln(formArray[i] + "<br />");
+        }
+        document.write("</p>");
+        /* ]]> */
+    </script>
+</body>
+</html>

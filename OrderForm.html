@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+|	program-name == Hilltop Le Flamant Order Form									|
+|	program-author == Mitchell Allen												|
+|	program-version == 3.0															|
+|	last-edit == 11:37PM 11/30/2015													|
+|   This program is designed to be run on tablets that are associated to the tables |
+|   at this fictional restaurant. 													|
+|	Tested in Google Chrome 45.0.2454.93m and IE 11.0.8 							|
+|- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+
+<!-- Changelog: November 2nd, 2015 10:56AM - Removed the floated variable description box and accompanying text then replaced with static descriptions with price now included.
+	 Changelog: November 2nd, 2015 11:14AM - Changed the labeling for nameandsubmit form and restyled the box. The form is now also the only form.
+     Changelog: November 2nd, 2015 11:38AM - Added the class textbox, changed the radio buttons to text input. Moved overflow: auto tag to the style sheet.
+     Changelog: November 2nd, 2015 11:57AM - Added validation to the drink quantity input.
+     Changelog: November 2nd, 2015 12:16PM - Changed the extras to text input with data validation.
+     Changelog: November 2nd, 2015 12:23PM - Restored functionality to reset function.
+     Changelog: November 2nd, 2015 02:00PM - Added orderConfirm function and the functions and variables needed for it to operate. Removed getName function.
+     Changelog: November 30th, 2015 06:16PM - Removed onBlur validation.
+     Changelog: November 30th, 2015 06:29PM - Added Sundae div, topping div and ice cream div.
+     Changelog: November 30th, 2015 06:36PM - Added size radio buttons, drop down list for toppings and checkboxes for cream type.
+     Changelog: November 30th, 2015 08:40PM - Changed method of pay to multi dropdown, added confirmation to the reset button, added new sundae fields to resetAll
+     Changelog: November 30th, 2015 10:24PM - Added validation to the onSubmit function
+     Changelog: November 30th, 2015 11:04PM - Revised validation of sundae section-->
+     
+    <title>Hilltop Le Flamant</title>
+    <!--order of css needs redone to be in a more orderly manor-->
+    <!--having a graphic design expert help design the visual aspects of the page would help-->
+    <style>
+		body {
+			margin: 0;
+			padding: 0;
+			background-color: lightgrey;
+		}
+		#box{
+			background-color: grey;
+			border-style: solid;
+			border-width: thin;
+			margin: auto;
+			width: 1000px;
+			font-size: 18px;
+		}
+		#box2{
+			width: 1000px;
+			margin: auto;
+		}
+		#drinks{
+			margin-left: 20px;
+			float: left;
+			font-size: 16pt;
+		}
+		.desc{
+			font-style: italic;
+			font-size: 12pt;
+			width: 500px;
+		}
+		.label{
+			margin-top: 5px;
+			margin-left: 5px;
+			float: left;
+			font-size: 12pt;
+		}
+		#extra{
+			margin-left: 10px;
+			font-size: 16pt;
+		}
+		.name{
+			margin-top: 5px;
+			margin-left: 5px;
+			resize: none;
+			overflow: auto;
+		}
+		.intext{
+			margin-top: 5px;
+			margin-left: 5px;
+			width: 20px;
+		}
+		#method{
+			margin-top: 5px;
+			margin-left: 5px;
+			margin-bottom: 5px;
+		}
+		#phonenum{
+			resize: none;
+			margin-top: 2px;
+			margin-right: 9px;
+		}
+		.subrest{
+			width: 75px;
+			margin-right: 4px;
+			float: right;
+		}	
+	</style>
+    <!--all the javascript for this project is done in an external sheet-->
+    <script type="text/javascript" src="OrderForm.js"> 
+	</script>
+</head>
+
+<body>
+	<h1 align="center">Hilltop Le Flamant</h1> <!--needs a different font to help emphasize the title-->
+    <h2 align="center">Order Form</h2> <!--align tags used here instead of css solution-->
+    
+    <form name="nameandsubmit" action="Ordersubmitted.html" method="get" onSubmit="return orderConfirm()" id = "form"> <!--would like to add account registering and login functionality for repeat customers, storing drink preferences-->
+    <div id="box">    
+    	<div>                     
+                <p class="label"> First Name:<br> <!-- styling this section is giving trouble will come back to fix later -->
+                Last Name: <br><br>
+                Phone Number: <br>
+                Method of Pay:
+                </p> 
+                <textarea name="firstname" id="firstname" placeholder="First Name" class="name" cols="14" rows="1" maxlength="15" required></textarea><br>
+                <textarea name="lastname" id="lastname" placeholder="Last Name" class="name" cols="14" rows="1" maxlength="15" required></textarea><br>
+                <textarea name="phonenum" placeholder="(___)___-____" id="phonenum" class="name" cols="12" rows="1" maxlength="13" required></textarea><br>
+                <select name="methodPay" id="method" multiple="multiple" size="3" required>
+                    <option value="cash">Cash</option>
+                    <option value="card">Credit Card</option>
+                    <option value="travelersCheck">Traveler's Check</option>
+                </select>
+                <input type="submit" id="order" class="subrest" name="order" value="Order"/>
+                <input type="button" id="reset" class ="subrest" name="reset" value="Reset" onclick="resetclick()"/>
+   		</div>
+	</div>
+
+    <div id="box2">
+    
+        <div id="drinks"> <!--Everything in the drinks id is float left to allow it to be positioned side by side with the extras section-->
+            <h2>Drinks</h2>
+        	<input type="text" id="yamazaki" maxlength="2" value="0" class="intext" onBlur="resetc(this)">Yamazaki 50 Year Single Malt <br/>
+            <p class="desc">"This rare Japanese single malt is one of only 150 bottles ever produced with a spiced, intense nose and incredibly rich palate." - $1000</p>
+            <input type="text" id="dalmore1" maxlength="2" value="0" class="intext" onBlur="resetc(this)">Dalmore 50 Crystal Decanter <br/>
+            <p class="desc">"This Dalmore 50 year is one of only 60 bottles, showing excellent quality and craftsmenship. This single malt is sherryed and aged for at minimum 50 years and is considered one of the most priviliged and unforgettable scotchs to exist." - $1350</p>
+            <input type="text" id="dalmore2" maxlength="2" value="0" class="intext" onBlur="resetc(this)">Dalmore 62 Single Highland Malt <br/>
+            <p class="desc">"The Dalmore 62, easily the most expensive whisky in the world and one of only 12 bottles, is truly an example of why the Dalmore name is so legendary." - $2350 </p>
+            <input type="text" id="suntory" maxlength="2" value="0" class="intext" onBlur="resetc(this)">Suntory Hibiki 30 Year Blended <br/>
+            <p class="desc">"This 30 year old blended scotch from Suntory is widely considered one of the finest blended whisky available." - $400</p>
+            <input type="text" id="macallan" maxlength="2" value="0" class="intext" onBlur="resetc(this)">Macallan 1926 Single Malt <br/>
+            <p class="desc">"This rare Macallan 1926 single malt scotch is dry and concentrated with a licorice after-taste." - $6000</p>
+            <input type="text" id="hirsch" maxlength="2" value="0" class="intext" onBlur="resetc(this)">A.H. Hirsch Reserve 16 Year Straight Bourbon <br/>
+            <p class="desc">"One of the most well regarded native spirits the Hirsch Reserve 16 year is the best Bourbon has to offer." - $500</p>
+        </div>
+        
+    </div>
+    
+    <div id="extra"> <!--alignment and margins is being done automatically for this div-->
+    	<h2>Extras</h2>
+        <input type="text" id="apple" class="intext" maxlength="2" value="0" onBlur="resetc(this)"/> Apple Pie (1 Slice) <br/>
+        <input type="text" id="cherry" class="intext" maxlength="2" value="0" onBlur="resetc(this)"/> Cherry Pie (1 Slice) <br/>
+        <input type="text" id="chef" class="intext" maxlength="2" value="0" onBlur="resetc(this)"/> Chef's Special (1 Slice) <br/>
+        <input type="text" id="cheese" class="intext" maxlength="2" value="0" onBlur="resetc(this)"/> Cheesecake (1 Slice) <br/>
+        <input type="text" id="pecans" class="intext" maxlength="2" value="0" onBlur="resetc(this)"/> Pecans <br/>
+        <input type="text" id="pistachios" class="intext" maxlength="2" value="0" onBlur="resetc(this)"/> Pistachios <br/>
+        <input type="text" id="extraother" class="intext" maxlength="2" value="0" onBlur="resetc(this)"/> Others may be available upon request
+    </div>
+    <h1>Sundae</h1>
+    <h2>Size</h2>
+    <div id="sundae">
+    	<input type="radio" name="sundae" value="small" id="sml" onclick="radiosuntrue()">Small<br>
+        <input type="radio" name="sundae" value="super" id="spr" onclick="radiosuntrue()">Super<br>
+        <input type="radio" name="sundae" value="all" id="all" onclick="radiosuntrue()">All
+    </div>
+    
+    <h2>Toppings</h2>
+    <div id="topping">
+    	<select name="top" id="top" multiple="multiple" size="4">
+            <option value="brandcherries">Branded Cherries</option>
+            <option value="lemon">Lemon Curd</option>
+            <option value="candwal">Candied Walnuts</option>
+            <option value="gingersnaps">Crushed Gingersnaps</option>
+            <option value="honey">Honey</option>
+            <option value="strawberries">Freeze-Dried Strawberries</option>
+            <option value="assfruit">Assorted Fresh Fruit</option>
+            <option value="ginger">Crystalized Ginger</option>
+        </select>
+    </div>
+    
+    <h2>Ice Cream Type</h2>
+    <div id="cream">
+    	<input type="checkbox" name="cream" value="vanilla" id="van" onClick="chbx(this)">Vanilla<br>
+        <input type="checkbox" name="cream" value="chocolate" id="cho" onClick="chbx(this)">Chocolate<br>
+        <input type="checkbox" name="cream" value="strawberry" id="str" onClick="chbx(this)">Strawberry
+    </div>
+    </form>
+</body>
+</html>
